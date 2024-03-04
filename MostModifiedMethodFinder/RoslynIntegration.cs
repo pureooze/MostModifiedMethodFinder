@@ -11,29 +11,6 @@ public class RoslynIntegration
         return CSharpSyntaxTree.ParseText(fileContent);
     }
     
-    public IEnumerable<string> GetChangedMethods(SyntaxTree oldTree, SyntaxTree newTree)
-    {
-        var oldRoot = oldTree.GetRoot();
-        var newRoot = newTree.GetRoot();
-        
-        var oldMethods = oldRoot.DescendantNodes().OfType<MethodDeclarationSyntax>().ToList();
-        var newMethods = newRoot.DescendantNodes().OfType<MethodDeclarationSyntax>().ToList();
-        
-        var changedMethods = new List<string>();
-        
-        foreach (var newMethod in newMethods)
-        {
-            var oldMethod = oldMethods.FirstOrDefault(m => m.Identifier.ValueText == newMethod.Identifier.ValueText);
-            
-            if (oldMethod == null || oldMethod.ToString() != newMethod.ToString())
-            {
-                changedMethods.Add(newMethod.Identifier.ValueText);
-            }
-        }
-        
-        return changedMethods.Distinct();
-    }
-    
     public IEnumerable<string> GetDetailedChanges(SyntaxTree oldTree, SyntaxTree newTree)
     {
         var oldRoot = oldTree.GetRoot();
