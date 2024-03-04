@@ -6,3 +6,7 @@ obj/
 .idea/
 riderModule.iml
 /_ReSharper.Caches/
+.vs/
+
+# Configs
+appsettings.json
